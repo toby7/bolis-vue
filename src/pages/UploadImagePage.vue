@@ -17,7 +17,8 @@
 
 <script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon } from "@ionic/vue";
-// import {Plugins, CameraResultType, CameraSource } from 'capacitor/core';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Buffer } from 'buffer'
 
 import { 
   cameraOutline
@@ -40,25 +41,54 @@ setup() {
     }
   },
   methods: {
-    // async takePhoto() {
-    //   const image = Plugins.Camera.getPhoto({
-    //     quality: 100,
-    //     allowEditing: false,
-    //     resultType: CameraResultType.DataUrl,
-    //     source: CameraSource.Camera
-    //   })
+    async takePhoto() {
+      const image = await Camera.getPhoto({
+        quality: 50,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Camera
+      })
+      //tester()
+      
+      console.log(image);
+      console.log(image.dataUrl);
+      console.log(image.webPath);
+      console.log(image.base64String);
 
-    //   alert(image);
-    // },
+      var form = new FormData();
+      var decodedFile = Buffer.from(image.base64String, 'base64');
+      form.append('file', decodedFile)
+      fetch("https://localhost:7106/compare2", {
+      "method": "POST",
+      "headers": {
+           //"Content-Type": "multipart/form-data"
+      },
+      "body": form
+  })
+  .then(response => { 
+      if(response.ok){
+          return response.json()    
+      } else{
+          alert("Server returned " + response.status + " : " + response.statusText);
+      }                
+  })
+  .then(response => {
+      this.result = response.body; 
+  })
+  .catch(err => {
+      console.log(err);
+  });
+    },
 
-    // handleClick: function(){
-    //   return this.takePhoto(); 
-    // },
-    // submit () {
-    //   navigator.mediaDevices.getUserMedia({
-    //    video: true
-    //  })
-    // }
+    handleClick: function(){
+      return this.takePhoto(); 
+    },
+
+    submit () {
+      navigator.mediaDevices.getUserMedia({
+       video: true
+     })
+    },
   }
 }
 </script>

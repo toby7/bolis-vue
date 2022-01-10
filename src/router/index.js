@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import UploadImagePage from '../pages/UploadImagePage.vue';
+//import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 const routes = [
   {
@@ -18,3 +19,7 @@ const router = createRouter({
 })
 
 export default router
+// {
+//   router,
+//   //defineCustomElements
+// } 
