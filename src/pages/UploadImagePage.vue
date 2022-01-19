@@ -18,7 +18,8 @@
 <script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon } from "@ionic/vue";
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { Buffer } from 'buffer'
+import { Buffer } from 'buffer';
+
 
 import { 
   cameraOutline
@@ -53,12 +54,18 @@ setup() {
       console.log(image);
       console.log(image.dataUrl);
       console.log(image.webPath);
-      console.log(image.base64String);
+      //console.log(image.base64String);
 
       var form = new FormData();
       var decodedFile = Buffer.from(image.base64String, 'base64');
-      form.append('file', decodedFile)
-      fetch("https://localhost:7106/compare2", {
+      //var test = new Blob(image.base64String);
+       console.log(image.base64String);
+      console.log(decodedFile);
+    var base64 = await fetch(image.dataUrl);
+    var testa = await base64.blob();
+    console.log(testa.size);
+      form.append('image', testa);//, '/C:/Temp/vinlista1.jpg');//, { filename: 'test.jpg' })
+      fetch("https://localhost:7106/compare2", { //"https://localhost:44354/api/station/test"
       "method": "POST",
       "headers": {
            //"Content-Type": "multipart/form-data"
