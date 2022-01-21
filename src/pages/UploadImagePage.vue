@@ -16,16 +16,17 @@
 </template>
 
 <script>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon } from "@ionic/vue";
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, useIonRouter, loadingController  } from "@ionic/vue";
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { Buffer } from 'buffer';
+import { cameraOutline } from 'ionicons/icons';
+import { useRouter } from 'vue-router';
 
-
-import { 
-  cameraOutline
-} from 'ionicons/icons';
+//import { useIonRouter } from '@ionic/vue';
 
 export default {
+  props: {
+    timeout: { type: Number, default: 1000 },
+  },
 components: {
     IonPage,
     IonHeader,
@@ -37,51 +38,62 @@ components: {
     IonIcon 
 },
 setup() {
-    return {
-      cameraOutline
+    // return {
+    //   cameraOutline
+    // },
+      const router = useRouter();
+      const ionRouter = useIonRouter();
+      return {
+      cameraOutline,
+      router,
+      ionRouter
     }
   },
   methods: {
-    async takePhoto() {
+
+    
+    async takePhoto() {   
       const image = await Camera.getPhoto({
         quality: 50,
         allowEditing: false,
-        resultType: CameraResultType.Base64,
+        resultType: CameraResultType.DataUrl,
         source: CameraSource.Camera
       })
-      //tester()
-      
-      console.log(image);
-      console.log(image.dataUrl);
-      console.log(image.webPath);
-      //console.log(image.base64String);
 
-      var form = new FormData();
-      var decodedFile = Buffer.from(image.base64String, 'base64');
-      //var test = new Blob(image.base64String);
-       console.log(image.base64String);
-      console.log(decodedFile);
+    var form = new FormData();
     var base64 = await fetch(image.dataUrl);
     var testa = await base64.blob();
     console.log(testa.size);
-      form.append('image', testa);//, '/C:/Temp/vinlista1.jpg');//, { filename: 'test.jpg' })
-      fetch("https://localhost:7106/compare2", { //"https://localhost:44354/api/station/test"
+
+    const loading = await loadingController
+        .create({
+          cssClass: 'my-custom-class',
+          message: 'Please wait...',
+          //duration: this.timeout,
+        });
+        
+      await loading.present();
+    //this.presentLoading();
+
+      form.append('image', testa);
+      fetch("https://localhost:7106/compare2", { 
       "method": "POST",
-      "headers": {
-           //"Content-Type": "multipart/form-data"
-      },
+      "headers": {},
       "body": form
   })
   .then(response => { 
       if(response.ok){
-          return response.json()    
+        loading.dismiss();
+        this.ionRouter.push('/wines'); 
+          console.log(response.json()); 
       } else{
           alert("Server returned " + response.status + " : " + response.statusText);
       }                
   })
-  .then(response => {
-      this.result = response.body; 
-  })
+  // .then(response => {
+  //     this.result = response.body;
+      
+  // })
   .catch(err => {
       console.log(err);
   });
@@ -96,6 +108,29 @@ setup() {
        video: true
      })
     },
+    async presentLoading() {
+      const loading = await loadingController
+        .create({
+          cssClass: 'my-custom-class',
+          message: 'Please wait...',
+          //duration: this.timeout,
+        });
+        
+      await loading.present();
+      
+      // setTimeout(function() {
+      //   loading.dismiss()
+      // }, this.timeout)
+    }
   }
 }
 </script>
+
+<style scoped>
+.my-custom-class {
+  --background: #222;
+  --spinner-color: #fff;
+
+  color: #fff;
+}
+</style>

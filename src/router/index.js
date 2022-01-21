@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import UploadImagePage from '../pages/UploadImagePage.vue';
+import WineListPage from '../pages/WineListPage.vue';
 
 const routes = [
   {
@@ -9,6 +10,10 @@ const routes = [
   {
     path: '/upload',
     component: UploadImagePage
+  },
+  {
+    path: '/wines',
+    component: WineListPage
   }
 ]
 
