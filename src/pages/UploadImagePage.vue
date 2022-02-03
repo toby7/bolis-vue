@@ -17,9 +17,10 @@
 
 <script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, useIonRouter, loadingController  } from "@ionic/vue";
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+//import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { cameraOutline } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
+import { usePhotoGallery } from '@/composables/usePhotoGallery';
 
 //import { useIonRouter } from '@ionic/vue';
 
@@ -40,10 +41,12 @@ components: {
 setup() {
       const router = useRouter();
       const ionRouter = useIonRouter();
+      const { takePhoto } = usePhotoGallery();
       return {
-      cameraOutline,
-      router,
-      ionRouter
+        cameraOutline,
+        router,
+        ionRouter,
+        takePhoto
     }
   },
   methods: {
@@ -52,16 +55,15 @@ setup() {
 
 
 
-    async takePhoto() {   
-      //alert('fired');
-      const image = await Camera.getPhoto({
-        quality: 50,
-        allowEditing: false,
-        resultType: CameraResultType.DataUrl,
-        source: CameraSource.Camera,
+  //   async takePhoto() {   
 
-      })
-alert(JSON.stringify(image));
+  //     const image = await Camera.getPhoto({
+  //       quality: 50,
+  //       allowEditing: false,
+  //       resultType: CameraResultType.DataUrl,
+  //       source: CameraSource.Camera,
+
+  //     })
   //   var form = new FormData();
   //   var base64 = await fetch(image.dataUrl);
   //   var blob = await base64.blob();
@@ -99,7 +101,7 @@ alert(JSON.stringify(image));
   //   alert(err.stack);
   //   alert(err.message);
   // });
-    },
+  //   },
 
     handleClick: function() {
         //var hej = Camera.checkPermissions();

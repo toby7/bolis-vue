@@ -1,7 +1,7 @@
-import { ref, onMounted, watch } from 'vue';
-import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
-import { Filesystem, Directory } from '@capacitor/filesystem';
-import { Storage } from '@capacitor/storage';
+//import { ref, onMounted, watch } from 'vue';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+//import { Filesystem, Directory } from '@capacitor/filesystem';
+//import { Storage } from '@capacitor/storage';
 
 export function usePhotoGallery() {
     const takePhoto = async () => {
@@ -10,6 +10,7 @@ export function usePhotoGallery() {
         source: CameraSource.Camera,
         quality: 100,
       });
+      alert(photo);
     };
   
     return {
