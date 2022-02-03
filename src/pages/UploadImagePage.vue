@@ -7,7 +7,7 @@
         </ion-header>
         <ion-content>
             <ion-fab vertical="center" horizontal="center" slot="fixed">
-                <ion-fab-button @click="handleClick">
+                <ion-fab-button @click="takePhoto">
                     <ion-icon :icon="cameraOutline" size="large"></ion-icon>
                 </ion-fab-button>
             </ion-fab>
@@ -38,9 +38,6 @@ components: {
     IonIcon 
 },
 setup() {
-    // return {
-    //   cameraOutline
-    // },
       const router = useRouter();
       const ionRouter = useIonRouter();
       return {
@@ -50,69 +47,77 @@ setup() {
     }
   },
   methods: {
+ 
 
-    
+
+
+
     async takePhoto() {   
+      //alert('fired');
       const image = await Camera.getPhoto({
         quality: 50,
         allowEditing: false,
         resultType: CameraResultType.DataUrl,
-        source: CameraSource.Camera
+        source: CameraSource.Camera,
+
       })
+alert(JSON.stringify(image));
+  //   var form = new FormData();
+  //   var base64 = await fetch(image.dataUrl);
+  //   var blob = await base64.blob();
 
-    var form = new FormData();
-    var base64 = await fetch(image.dataUrl);
-    var testa = await base64.blob();
-    console.log(testa.size);
-
-    const loading = await loadingController
-        .create({
-          cssClass: 'my-custom-class',
-          message: 'Please wait...',
-          //duration: this.timeout,
-        });
+  //   const loading = await loadingController
+  //       .create({
+  //         cssClass: 'my-custom-class',
+  //         message: 'Nice... Barolo',
+  //         //duration: this.timeout,
+  //       });
         
-      await loading.present();
-    //this.presentLoading();
+  //     await loading.present();
+  //   //this.presentLoading();
 
-      form.append('image', testa);
-      fetch("https://localhost:7106/compare2", { 
-      "method": "POST",
-      "headers": {},
-      "body": form
-  })
-  .then(response => { 
-      if(response.ok){
-        loading.dismiss();
-        this.ionRouter.push('/wines'); 
-          console.log(response.json()); 
-      } else{
-          alert("Server returned " + response.status + " : " + response.statusText);
-      }                
-  })
-  // .then(response => {
-  //     this.result = response.body;
-      
+  //     form.append('image', blob);
+  //     fetch("https://localhost:7106/compare2", { 
+  //     "method": "POST",
+  //     "headers": {},
+  //     "body": form
   // })
-  .catch(err => {
-      console.log(err);
-  });
+  // .then(response => { 
+  //     if(response.ok) {
+  //       loading.dismiss();
+  //       this.ionRouter.push('/wines/:data', { data: response.json() }); 
+  //         //console.log(response.json()); 
+  //     } else{
+  //         alert("Server returned " + response.status + " : " + response.statusText);
+  //     }                
+  // })
+  // // .then(response => {
+  // //     this.result = response.body;
+      
+  // // })
+  // .catch(err => {
+  //   alert(err.stack);
+  //   alert(err.message);
+  // });
     },
 
-    handleClick: function(){
+    handleClick: function() {
+        //var hej = Camera.checkPermissions();
+        //alert(JSON.stringify(hej, null, 4))
+      //console.log(hej);
       return this.takePhoto(); 
     },
 
-    submit () {
-      navigator.mediaDevices.getUserMedia({
-       video: true
-     })
-    },
+    // submit () {
+    //   navigator.mediaDevices.getUserMedia({
+    //    video: true
+    //  })
+    // },
     async presentLoading() {
       const loading = await loadingController
         .create({
           cssClass: 'my-custom-class',
-          message: 'Please wait...',
+          message: 'Nice... Barolo',
           //duration: this.timeout,
         });
         

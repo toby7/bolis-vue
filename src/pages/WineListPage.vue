@@ -3,16 +3,23 @@
         <ion-header>
             <ion-toolbar>
                 <ion-title>Viner</ion-title>
-                </ion-toolbar>    
+                <ion-buttons slot="start">
+                    <ion-back-button default-href="/upload"></ion-back-button>
+                </ion-buttons>
+            </ion-toolbar>    
         </ion-header>
         <ion-content>
-
+            <ion-list>
+                <ion-item>test1</ion-item>
+                <ion-item>test2</ion-item>
+                <ion-item>test3</ion-item>
+            </ion-list>
         </ion-content>
     </ion-page>
 </template>
 
 <script>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from "@ionic/vue";
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonList, IonItem } from "@ionic/vue";
 
 export default {
 components: {
@@ -20,7 +27,17 @@ components: {
     IonHeader,
     IonToolbar,
     IonTitle,
-    IonContent
-    }
+    IonContent,
+    IonButtons,
+    IonBackButton,
+    IonList,
+    IonItem
+    },
+
+props:['data'],
+
+mounted() {
+   alert(this.data);
+ }
 }
 </script>
