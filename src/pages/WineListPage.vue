@@ -37,7 +37,6 @@ components: {
 props: ['items'],
 
 mounted() {
-   //alert(JSON.stringify(this.items));
    console.log(JSON.stringify(this.items));
    console.log(this.items);
  }
