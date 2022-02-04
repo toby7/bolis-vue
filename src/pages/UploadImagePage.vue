@@ -77,7 +77,7 @@ console.log(image);
       await loading.present();
       await new Promise(resolve => setTimeout(resolve, 4000));
       loading.dismiss();
-    //this.presentLoading();
+
     this.ionRouter.push({
           name: 'wines',
           params: {
