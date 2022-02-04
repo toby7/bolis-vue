@@ -17,10 +17,10 @@
 
 <script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, useIonRouter, loadingController  } from "@ionic/vue";
-//import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { cameraOutline } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
-import { usePhotoGallery } from '@/composables/usePhotoGallery';
+//import { usePhotoGallery } from '@/composables/usePhotoGallery';
 
 //import { useIonRouter } from '@ionic/vue';
 
@@ -41,12 +41,12 @@ components: {
 setup() {
       const router = useRouter();
       const ionRouter = useIonRouter();
-      const { takePhoto } = usePhotoGallery();
+      //const { takePhoto } = usePhotoGallery();
       return {
         cameraOutline,
         router,
-        ionRouter,
-        takePhoto
+        ionRouter
+        //takePhoto
     }
   },
   methods: {
@@ -55,53 +55,64 @@ setup() {
 
 
 
-  //   async takePhoto() {   
+    async takePhoto() {   
 
-  //     const image = await Camera.getPhoto({
-  //       quality: 50,
-  //       allowEditing: false,
-  //       resultType: CameraResultType.DataUrl,
-  //       source: CameraSource.Camera,
+      const image = await Camera.getPhoto({
+        quality: 50,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Camera,
 
-  //     })
-  //   var form = new FormData();
-  //   var base64 = await fetch(image.dataUrl);
-  //   var blob = await base64.blob();
-
-  //   const loading = await loadingController
-  //       .create({
-  //         cssClass: 'my-custom-class',
-  //         message: 'Nice... Barolo',
-  //         //duration: this.timeout,
-  //       });
-        
-  //     await loading.present();
-  //   //this.presentLoading();
+      })
+    //var form = new FormData();
+    //var base64 = await fetch(image.dataUrl);
+   // var blob = await base64.blob();
+console.log(image);
+    const loading = await loadingController
+        .create({
+          cssClass: 'my-custom-class',
+          message: this.getRandomSentence(),
+        });
+        // Remove below
+      await loading.present();
+      await new Promise(resolve => setTimeout(resolve, 4000));
+      loading.dismiss();
+    //this.presentLoading();
+    this.ionRouter.push({
+          name: 'wines',
+          params: {
+              items: "tester testiiiiiing"
+          }
+      });
 
   //     form.append('image', blob);
-  //     fetch("https://localhost:7106/compare2", { 
+  //     fetch("https://ostnas.com/", {//"https://localhost:7106/compare2", { 
   //     "method": "POST",
   //     "headers": {},
   //     "body": form
   // })
   // .then(response => { 
   //     if(response.ok) {
+  //       this.router.push({
+  //         name: 'wines',
+  //         params: {
+  //             items: response.json()
+  //         }
+  //     });
   //       loading.dismiss();
-  //       this.ionRouter.push('/wines/:data', { data: response.json() }); 
+  //       this.ionRouter.push(
+  //         '/wines',
+  //        { data: response.json() }); 
   //         //console.log(response.json()); 
   //     } else{
   //         alert("Server returned " + response.status + " : " + response.statusText);
   //     }                
   // })
-  // // .then(response => {
-  // //     this.result = response.body;
-      
-  // // })
   // .catch(err => {
   //   alert(err.stack);
   //   alert(err.message);
   // });
-  //   },
+},
 
     handleClick: function() {
         //var hej = Camera.checkPermissions();
@@ -115,20 +126,28 @@ setup() {
     //    video: true
     //  })
     // },
+     getRandomSentence() {
+      var sentences = [
+        "Nice... Barolo",
+        "Zinfandel, no thanks :)",
+        "Champagne > Prosecco"
+      ]
+      var item = sentences[Math.floor(Math.random() * sentences.length)];
+
+      return item;
+    },
+
     async presentLoading() {
       const loading = await loadingController
         .create({
           cssClass: 'my-custom-class',
-          message: 'Nice... Barolo',
-          //duration: this.timeout,
+          message: this.getRandomSentence()//'Nice... Barolo',
         });
         
       await loading.present();
       
-      // setTimeout(function() {
-      //   loading.dismiss()
-      // }, this.timeout)
-    }
+    },
+
   }
 }
 </script>

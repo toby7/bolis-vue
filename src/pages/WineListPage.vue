@@ -34,10 +34,12 @@ components: {
     IonItem
     },
 
-props:['data'],
+props: ['items'],
 
 mounted() {
-   alert(this.data);
+   //alert(JSON.stringify(this.items));
+   console.log(JSON.stringify(this.items));
+   console.log(this.items);
  }
 }
 </script>
