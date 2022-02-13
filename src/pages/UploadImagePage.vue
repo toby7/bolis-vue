@@ -2,8 +2,8 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Ta kort på vinlista</ion-title>
-                </ion-toolbar>    
+                <ion-title>Bolis</ion-title>
+            </ion-toolbar>    
         </ion-header>
         <ion-content>
             <ion-fab vertical="center" horizontal="center" slot="fixed">
@@ -21,7 +21,6 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { cameraOutline } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 //import { usePhotoGallery } from '@/composables/usePhotoGallery';
-
 //import { useIonRouter } from '@ionic/vue';
 
 export default {
@@ -50,10 +49,6 @@ setup() {
     }
   },
   methods: {
- 
-
-
-
 
     async takePhoto() {   
 
@@ -64,54 +59,49 @@ setup() {
         source: CameraSource.Camera,
 
       })
-    //var form = new FormData();
-    //var base64 = await fetch(image.dataUrl);
-   // var blob = await base64.blob();
-console.log(image);
+    var form = new FormData();
+    var base64 = await fetch(image.dataUrl);
+    var blob = await base64.blob();
+
     const loading = await loadingController
         .create({
           cssClass: 'my-custom-class',
           message: this.getRandomSentence(),
         });
-        // Remove below
-      await loading.present();
-      await new Promise(resolve => setTimeout(resolve, 4000));
-      loading.dismiss();
 
-    this.ionRouter.push({
-          name: 'wines',
-          params: {
-              items: "tester testiiiiiing"
+        await loading.present();
+      // await new Promise(resolve => setTimeout(resolve, 4000));
+      // loading.dismiss();
+
+      form.append('image', blob);
+
+      await fetch("https://bolis-api.azurewebsites.net/compare2", {//"https://localhost:44335/compare2", { 
+      "method": "POST",
+      "headers": {},
+      "body": form
+  })
+  .then(response => { 
+      if(response.ok) {
+          loading.dismiss();
+          return response.json();   
+      } else{
+          alert("Server returned " + response.status + " : " + response.statusText);
+      }                
+  })
+  .then(data => {
+    console.log("data:", data);
+    this.$store.commit('addWineList', data);
+      return this.ionRouter.push({
+            name: 'wines',           
+            params: {
+              id: data.id
           }
       });
-
-  //     form.append('image', blob);
-  //     fetch("https://ostnas.com/", {//"https://localhost:7106/compare2", { 
-  //     "method": "POST",
-  //     "headers": {},
-  //     "body": form
-  // })
-  // .then(response => { 
-  //     if(response.ok) {
-  //       this.router.push({
-  //         name: 'wines',
-  //         params: {
-  //             items: response.json()
-  //         }
-  //     });
-  //       loading.dismiss();
-  //       this.ionRouter.push(
-  //         '/wines',
-  //        { data: response.json() }); 
-  //         //console.log(response.json()); 
-  //     } else{
-  //         alert("Server returned " + response.status + " : " + response.statusText);
-  //     }                
-  // })
-  // .catch(err => {
-  //   alert(err.stack);
-  //   alert(err.message);
-  // });
+  })
+  .catch(err => {
+    alert(err.stack);
+    alert(err.message);
+  });
 },
 
     handleClick: function() {
@@ -120,12 +110,6 @@ console.log(image);
       //console.log(hej);
       return this.takePhoto(); 
     },
-
-    // submit () {
-    //   navigator.mediaDevices.getUserMedia({
-    //    video: true
-    //  })
-    // },
      getRandomSentence() {
       var sentences = [
         "Nice... Barolo",
