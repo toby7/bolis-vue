@@ -12,10 +12,10 @@ const routes = [
     component: UploadImagePage
   },
   {
-    path: '/wines',
+    path: '/wines/:id',
     name: 'wines',
     component: WineListPage,
-    props: true
+    //props: true
   }
 ]
 

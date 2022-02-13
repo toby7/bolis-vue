@@ -10,9 +10,15 @@
         </ion-header>
         <ion-content>
             <ion-list>
-                <ion-item>test1</ion-item>
-                <ion-item>test2</ion-item>
-                <ion-item>test3</ion-item>
+                <ion-item 
+                v-for="item in wines"
+                :key="item.productNumber"
+                :href="item.url">
+                    {{item.name}},
+                    {{item.vintage}},
+                    {{item.price}} kr,
+                    {{item.scores[0].score}}
+                </ion-item>     
             </ion-list>
         </ion-content>
     </ion-page>
@@ -34,11 +40,29 @@ components: {
     IonItem
     },
 
-props: ['items'],
+data() {
+    return {
+        id: this.$route.params.id
+    };
+},
+// props: [
+//     //'items',
+//     'id'
+// ],
+// watch: {
+//     '$route'(currentRoute) {}
+// },
 
-mounted() {
-   console.log(JSON.stringify(this.items));
-   console.log(this.items);
+// mounted() {
+// //    console.log("list stringify:", JSON.parse(JSON.stringify(this.items)));
+// //    console.log("list plain:", this.items);
+//  },
+computed: {
+      wines() {
+          var data = this.$store.getters.wineLists(this.id);
+          console.log('from vuex:', data)
+          return data.wines;
+      }
+    }
  }
-}
 </script>
