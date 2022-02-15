@@ -16,7 +16,7 @@
                 :href="item.url">
                     {{item.name}},
                     {{item.vintage}},
-                    {{item.price}} kr,
+                    <strong>{{item.price}} kr</strong>,
                     {{item.scores[0].score}}
                 </ion-item>     
             </ion-list>
