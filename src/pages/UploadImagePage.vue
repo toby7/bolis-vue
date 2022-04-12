@@ -49,21 +49,19 @@ setup() {
     }
   },
   methods: {
-
     async takePhoto() {   
-
       const image = await Camera.getPhoto({
         quality: 50,
         allowEditing: false,
         resultType: CameraResultType.DataUrl,
-        source: CameraSource.Camera,
-
+        source: CameraSource.Camera
       })
-    var form = new FormData();
-    var base64 = await fetch(image.dataUrl);
-    var blob = await base64.blob();
 
-    const loading = await loadingController
+      var form = new FormData();
+      var base64 = await fetch(image.dataUrl);
+      var blob = await base64.blob();
+
+      const loading = await loadingController
         .create({
           cssClass: 'my-custom-class',
           message: this.getRandomSentence(),
@@ -75,35 +73,34 @@ setup() {
 
       form.append('image', blob);
 
-      await fetch("https://bolis-api.azurewebsites.net/compare2", {//"https://localhost:44335/compare2", { 
+      await fetch("https://localhost:7106/compare2", { //"https://bolis-api.azurewebsites.net/compare2", {
       "method": "POST",
       "headers": {},
       "body": form
-  })
-  .then(response => { 
-      if(response.ok) {
-          loading.dismiss();
-          return response.json();   
-      } else{
+      })
+      .then(response => {
+        loading.dismiss(); 
+        if(response.ok) {
+            return response.json();   
+        } else{
           alert("Server returned " + response.status + " : " + response.statusText);
-      }                
-  })
-  .then(data => {
-    console.log("data:", data);
-    this.$store.commit('addWineList', data);
-      return this.ionRouter.push({
-            name: 'wines',           
-            params: {
-              id: data.id
-          }
+        }                
+      })
+      .then(data => {
+        console.log("data:", data);
+        this.$store.commit('addWineList', data);
+          return this.ionRouter.push({
+                name: 'wines',           
+                params: {
+                  id: data.id
+              }
+          });
+      })
+      .catch(err => {
+        alert(err.stack);
+        alert(err.message);
       });
-  })
-  .catch(err => {
-    alert(err.stack);
-    alert(err.message);
-  });
-},
-
+    },
     handleClick: function() {
         //var hej = Camera.checkPermissions();
         //alert(JSON.stringify(hej, null, 4))
@@ -128,10 +125,8 @@ setup() {
           message: this.getRandomSentence()//'Nice... Barolo',
         });
         
-      await loading.present();
-      
+      await loading.present();     
     },
-
   }
 }
 </script>

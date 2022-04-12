@@ -16,8 +16,11 @@
                 :href="item.url">
                     {{item.name}},
                     {{item.vintage}},
-                    <strong>{{item.price}} kr</strong>,
-                    {{item.scores[0].score}}
+                    {{item.price}} kr
+                    <ion-badge class="ion-margin-start" color="primary">
+                        <div class="score">{{item.scores[0].score}}</div>
+                        <span class="voteCount">{{item.scores[0].voteCount}}</span>
+                        </ion-badge>
                 </ion-item>     
             </ion-list>
         </ion-content>
@@ -25,7 +28,18 @@
 </template>
 
 <script>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonList, IonItem } from "@ionic/vue";
+import { 
+    IonPage,
+    IonHeader,
+    IonToolbar, 
+    IonTitle, 
+    IonContent, 
+    IonButtons, 
+    IonBackButton, 
+    IonList, 
+    IonItem,
+    IonBadge 
+    } from "@ionic/vue";
 
 export default {
 components: {
@@ -37,7 +51,8 @@ components: {
     IonButtons,
     IonBackButton,
     IonList,
-    IonItem
+    IonItem,
+    IonBadge
     },
 
 data() {
@@ -66,3 +81,15 @@ computed: {
     }
  }
 </script>
+
+<style scoped>
+.ion-margin-start {
+    --ion-margin: 6px;
+}
+.score {
+    font-size: 1.2rem;
+}
+.voteCount {
+    font-size: 0.7rem;
+}
+</style>
