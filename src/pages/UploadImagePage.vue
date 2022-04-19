@@ -103,9 +103,6 @@ setup() {
       });
     },
     handleClick: function() {
-        //var hej = Camera.checkPermissions();
-        //alert(JSON.stringify(hej, null, 4))
-      //console.log(hej);
       return this.takePhoto(); 
     },
      getRandomSentence() {
