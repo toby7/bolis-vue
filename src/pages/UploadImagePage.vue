@@ -67,7 +67,7 @@ setup() {
           message: this.getRandomSentence(),
         });
 
-        await loading.present();
+      await loading.present();
       // await new Promise(resolve => setTimeout(resolve, 4000));
       // loading.dismiss();
 
