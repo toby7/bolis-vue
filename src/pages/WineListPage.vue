@@ -10,15 +10,17 @@
         </ion-header>
         <ion-content>
             <ion-list>
-                <ion-item 
+                <ion-item class="item ios item-fill-none" target="_blank"
                 v-for="item in wines"
                 :key="item.productNumber"
                 :href="item.url">
-                    {{item.name}},
-                    {{item.vintage}},
-                    {{item.price}} kr
-                    <ion-badge class="ion-margin-start" color="primary">
-                        <div class="score">{{item.scores[0].score}}</div>
+                <ion-label class="ion-text-wrap">{{item.name}}, {{item.vintage}}</ion-label>
+
+                    <ion-badge slot="end" color="success">
+                        <div class="score">{{item.price}} kr</div>
+                        </ion-badge>            
+                    <ion-badge slot="end" color="danger">
+                        <div class="score">{{item.scores[0].score}}/5</div>
                         <span class="voteCount">{{item.scores[0].voteCount}}</span>
                         </ion-badge>
                 </ion-item>     
@@ -38,7 +40,8 @@ import {
     IonBackButton, 
     IonList, 
     IonItem,
-    IonBadge 
+    IonBadge,
+    IonLabel 
     } from "@ionic/vue";
 
 export default {
@@ -52,7 +55,8 @@ components: {
     IonBackButton,
     IonList,
     IonItem,
-    IonBadge
+    IonBadge,
+    IonLabel
     },
 
 data() {
@@ -84,7 +88,13 @@ computed: {
 
 <style scoped>
 .ion-margin-start {
-    --ion-margin: 6px;
+    --ion-margin: 4px;
+}
+.ion-padding-horizontal {
+    --ion-padding: 6px;
+}
+.ion-margin-horizontal {
+    --ion-margin: 4px;
 }
 .score {
     font-size: 1.2rem;
