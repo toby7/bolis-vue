@@ -15,8 +15,9 @@
                 :key="item.productNumber"
                 :href="item.url">
                 <ion-label class="ion-text-wrap">{{item.name}}, {{item.vintage}}</ion-label>
-                    <ion-badge v-if="item.price != null" slot="end" color="success">
-                        <div class="score">{{item.price}} kr</div>
+                    <ion-badge slot="end" color="success">
+                        <div v-if="item.price != null" class="score">{{item.price}} kr</div>
+                        <div v-else>n/a</div>
                     </ion-badge>            
                     <ion-badge slot="end" color="danger">
                         <div class="score">{{item.scores[0].score}}/5</div>
