@@ -15,14 +15,13 @@
                 :key="item.productNumber"
                 :href="item.url">
                 <ion-label class="ion-text-wrap">{{item.name}}, {{item.vintage}}</ion-label>
-
-                    <ion-badge slot="end" color="success">
+                    <ion-badge v-if="item.price != null" slot="end" color="success">
                         <div class="score">{{item.price}} kr</div>
-                        </ion-badge>            
+                    </ion-badge>            
                     <ion-badge slot="end" color="danger">
                         <div class="score">{{item.scores[0].score}}/5</div>
                         <span class="voteCount">{{item.scores[0].voteCount}}</span>
-                        </ion-badge>
+                    </ion-badge>
                 </ion-item>     
             </ion-list>
         </ion-content>

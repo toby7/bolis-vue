@@ -73,7 +73,7 @@ setup() {
 
       form.append('image', blob);
 
-      await fetch("https://bolis-api.azurewebsites.net/compare2", {
+      await fetch("https://localhost:7106/compare2", {//"https://bolis-api.azurewebsites.net/compare2", {
       "method": "POST",
       "headers": {},
       "body": form
