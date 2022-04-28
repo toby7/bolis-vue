@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Viner</ion-title>
+                <ion-title class="ion-text-center">Viner</ion-title>
                 <ion-buttons slot="start">
                     <ion-back-button default-href="/upload"></ion-back-button>
                 </ion-buttons>
@@ -101,5 +101,9 @@ computed: {
 }
 .voteCount {
     font-size: 0.7rem;
+}
+ion-title {
+  color: var(--ion-color-primary);
+  font-size: 1.6rem;
 }
 </style>

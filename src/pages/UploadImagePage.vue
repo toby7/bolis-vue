@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>
+                <ion-title class="ion-text-center">
                   Bolis
                   <span class="version-text">(Beta 1.0)</span>
                 </ion-title>
