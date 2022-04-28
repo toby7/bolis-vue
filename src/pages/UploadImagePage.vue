@@ -2,13 +2,16 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Bolis</ion-title>
+                <ion-title>
+                  Bolis
+                  <span class="version-text">(Beta 1.0)</span>
+                </ion-title>
             </ion-toolbar>    
         </ion-header>
-        <ion-content>
+        <ion-content>              
             <ion-fab vertical="center" horizontal="center" slot="fixed">
                 <ion-fab-button @click="takePhoto">
-                    <ion-icon :icon="cameraOutline" size="large"></ion-icon>
+                  <ion-icon :icon="cameraOutline" size="large"></ion-icon>
                 </ion-fab-button>
             </ion-fab>
         </ion-content>
@@ -20,8 +23,6 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabBut
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { cameraOutline } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
-//import { usePhotoGallery } from '@/composables/usePhotoGallery';
-//import { useIonRouter } from '@ionic/vue';
 
 export default {
   props: {
@@ -63,7 +64,7 @@ setup() {
 
       const loading = await loadingController
         .create({
-          cssClass: 'my-custom-class',
+          cssClass: 'loader',
           message: this.getRandomSentence(),
         });
 
@@ -73,7 +74,7 @@ setup() {
 
       form.append('image', blob);
 
-      await fetch("https://localhost:7106/compare2", {//"https://bolis-api.azurewebsites.net/compare2", {
+      await fetch("https://bolis-api.azurewebsites.net/compare2", {
       "method": "POST",
       "headers": {},
       "body": form
@@ -130,10 +131,19 @@ setup() {
 </script>
 
 <style scoped>
-.my-custom-class {
+.loader {
   --background: #222;
   --spinner-color: #fff;
-
   color: #fff;
+}
+
+.version-text {
+  color: var(--ion-color-secondary-shade);
+  font-size: 0.7rem;
+}
+
+ion-title {
+  color: var(--ion-color-primary);
+  font-size: 1.6rem;
 }
 </style>
