@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title class="ion-text-center">Viner</ion-title>
+                <ion-title class="ion-text-center">Wines</ion-title>
                 <ion-buttons slot="start">
                     <ion-back-button default-href="/upload"></ion-back-button>
                 </ion-buttons>
